@@ -1,0 +1,38 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo '🚀 ¡Hora de validar todo antes del push!'
+
+echo '🧐🔍 Revisando que todo esté en orden con ESLint, espera...'
+bun run eslint ||
+(
+    echo '🚨🚨 ¡ESLint encontró problemas! No puedes hacer push con código sucio. 🚨🚨\n'
+    echo 'Corrige los errores de ESLint antes de hacer push.';
+    false;
+)
+
+echo '💅✨ Verificando que los estilos estén perfectos, espera...'
+bun run stylelint ||
+(
+    echo '👗👗 ¡Tus estilos están más desordenados que tu habitación! 👗👗\n'
+    echo 'Corrige los errores de Stylelint antes de hacer push.';
+    false;
+)
+
+echo '🧠🔎 Chequeando que los tipos estén correctos, espera...'
+bun run check-types ||
+(
+    echo '🤡❌ ¡Chequeo de tipos fallido! ¿Estás seguro de que sabes programar? 🤡❌\n'
+    echo 'Corrige los errores de TypeScript antes de hacer push.';
+    false;
+)
+
+echo '🧪🔬 Ejecutando los tests, espera...'
+bun run test ||
+(
+    echo '💥💥 ¡Los tests explotaron más fuerte que tu café esta mañana! 💥💥\n'
+    echo 'Corrige los tests que fallaron antes de hacer push.';
+    false;
+)
+
+echo '🎉✅ ¡Todo perfecto! Tu código está listo para conquistar el mundo. ¡A hacer push! 🎉✅'

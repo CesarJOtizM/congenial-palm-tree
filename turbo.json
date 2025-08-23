@@ -1,0 +1,58 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "lint:fix": {
+      "dependsOn": ["^lint:fix"]
+    },
+    "eslint": {
+      "dependsOn": ["^eslint"]
+    },
+    "eslint:fix": {
+      "dependsOn": ["^eslint:fix"]
+    },
+    "prettier": {
+      "dependsOn": ["^prettier"]
+    },
+    "prettier:fix": {
+      "dependsOn": ["^prettier:fix"]
+    },
+    "stylelint": {
+      "dependsOn": ["^stylelint"]
+    },
+    "stylelint:fix": {
+      "dependsOn": ["^stylelint:fix"]
+    },
+    "check-types": {
+      "dependsOn": ["^check-types"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "test": {
+      "dependsOn": ["transit", "@repo/vitest_config#build"],
+      "outputs": ["coverage.json"]
+    },
+    "test:watch": {
+      "dependsOn": ["transit", "@repo/vitest_config#build"],
+      "cache": false,
+      "persistent": true
+    },
+    "test:coverage": {
+      "dependsOn": ["transit", "@repo/vitest_config#build"],
+      "outputs": ["coverage.json", "coverage/"]
+    },
+    "transit": {
+      "dependsOn": ["^transit"]
+    }
+  }
+}

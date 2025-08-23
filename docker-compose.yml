@@ -1,0 +1,56 @@
+services:
+  # Base de datos PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: vitawallet-postgres
+    env_file:
+      - .env.${ENV_FILE:-development}.local
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-vitawallet}
+      POSTGRES_USER: ${POSTGRES_USER:-vitawallet_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-vitawallet_password}
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init_db.sh:/docker-entrypoint-initdb.d/01-init_db.sh
+      - ./packages/database/prisma:/docker-entrypoint-initdb.d/02-prisma
+    networks:
+      - vitawallet-network
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'pg_isready -U $${POSTGRES_USER:-vitawallet_user} -d $${POSTGRES_DB:-vitawallet}',
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+  # Prisma Studio para desarrollo
+  prisma-studio:
+    build:
+      context: .
+      dockerfile: packages/database/Dockerfile
+    container_name: vitawallet-prisma-studio
+    env_file:
+      - .env.${ENV_FILE:-development}.local
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+      # Variables cargadas automáticamente por @repo/config desde .env.${ENV_FILE}.local
+    ports:
+      - '5555:5555'
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - vitawallet-network
+    command: bun run db:studio
+
+volumes:
+  postgres_data:
+
+networks:
+  vitawallet-network:
+    driver: bridge

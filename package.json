@@ -1,0 +1,55 @@
+{
+  "name": "dutch",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "lint:staged": "lint-staged",
+    "lint:fix": "turbo run lint:fix",
+    "eslint": "turbo run eslint",
+    "eslint:fix": "turbo run eslint:fix",
+    "prettier": "turbo run prettier",
+    "prettier:fix": "turbo run prettier:fix",
+    "stylelint": "turbo run stylelint",
+    "stylelint:fix": "turbo run stylelint:fix",
+    "check-types": "turbo run check-types",
+    "test": "turbo run test",
+    "test:watch": "turbo run test:watch",
+    "test:coverage": "turbo run test:coverage",
+    "view:report": "turbo run view-report",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@repo/vitest_config": "workspace:*",
+    "eslint": "^9.30.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
+    "prettier": "^3.6.2",
+    "stylelint": "^16.2.1",
+    "turbo": "^2.5.4",
+    "typescript": "5.8.3",
+    "vitest": "^3.0.7"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "bun@1.2.4",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "turbo run eslint:fix --filter=./**",
+      "prettier --write"
+    ],
+    "*.{css,scss,sass,less}": [
+      "turbo run stylelint:fix --filter=./**",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}
