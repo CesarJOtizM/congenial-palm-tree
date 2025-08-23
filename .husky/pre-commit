@@ -1,5 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
 
 echo '🏗️  ¡Hora de poner guapo tu código antes del commit!'
 

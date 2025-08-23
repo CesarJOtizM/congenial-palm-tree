@@ -1,6 +1,7 @@
 {
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
+  "globalEnv": ["NODE_ENV", "PORT"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -39,20 +40,21 @@
       "persistent": true
     },
     "test": {
-      "dependsOn": ["transit", "@repo/vitest_config#build"],
+      "dependsOn": ["@repo/vitest_config#build"],
       "outputs": ["coverage.json"]
     },
     "test:watch": {
-      "dependsOn": ["transit", "@repo/vitest_config#build"],
+      "dependsOn": ["@repo/vitest_config#build"],
       "cache": false,
       "persistent": true
     },
     "test:coverage": {
-      "dependsOn": ["transit", "@repo/vitest_config#build"],
+      "dependsOn": ["@repo/vitest_config#build"],
       "outputs": ["coverage.json", "coverage/"]
     },
-    "transit": {
-      "dependsOn": ["^transit"]
+    "test:ui": {
+      "dependsOn": ["@repo/vitest_config#build"],
+      "cache": false
     }
   }
 }

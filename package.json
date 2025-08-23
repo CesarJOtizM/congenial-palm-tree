@@ -22,30 +22,30 @@
   },
   "devDependencies": {
     "@repo/vitest_config": "workspace:*",
-    "eslint": "^9.30.0",
+    "eslint": "^9.34.0",
     "husky": "^9.1.7",
-    "lint-staged": "^16.1.2",
+    "lint-staged": "^16.1.5",
     "prettier": "^3.6.2",
-    "stylelint": "^16.2.1",
-    "turbo": "^2.5.4",
-    "typescript": "5.8.3",
-    "vitest": "^3.0.7"
+    "stylelint": "^16.23.1",
+    "turbo": "^2.5.6",
+    "typescript": "5.9.2",
+    "vitest": "^3.2.4"
   },
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "bun@1.2.4",
+  "packageManager": "bun@1.2.20",
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "turbo run eslint:fix --filter=./**",
+      "eslint --fix",
       "prettier --write"
     ],
     "*.{css,scss,sass,less}": [
-      "turbo run stylelint:fix --filter=./**",
+      "stylelint --fix",
       "prettier --write"
     ],
     "*.{json,md,yml,yaml}": [
