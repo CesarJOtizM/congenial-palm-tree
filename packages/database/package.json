@@ -1,5 +1,5 @@
 {
-  "name": "@deudas-app/database",
+  "name": "@repo/database",
   "version": "1.0.0",
   "description": "Paquete de base de datos para la aplicación de gestión de deudas",
   "main": "./dist/index.js",

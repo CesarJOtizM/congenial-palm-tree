@@ -24,7 +24,9 @@ async function bootstrap() {
   const port = serverConfig.port || 3000;
   await app.listen(port);
 
+  // eslint-disable-next-line no-console
   console.log(`🚀 Application running on http://localhost:${port}`);
+  // eslint-disable-next-line no-console
   console.log(`🌍 Environment: ${serverConfig.environment}`);
 }
 bootstrap();

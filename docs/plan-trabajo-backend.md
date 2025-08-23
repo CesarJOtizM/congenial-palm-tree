@@ -67,7 +67,7 @@ Entregar un **MVP funcional** que cumpla todos los criterios técnicos estableci
 
 ---
 
-### **Sprint 2: Autenticación y Usuarios** ⏱️ 2-3 días ❌ **PENDIENTE**
+### **Sprint 2: Autenticación y Usuarios** ⏱️ 2-3 días ✅ **COMPLETADO**
 
 #### Objetivos
 
@@ -77,20 +77,20 @@ Entregar un **MVP funcional** que cumpla todos los criterios técnicos estableci
 #### Tareas
 
 - [x] Crear módulo de usuarios (estructura de carpetas)
-- [ ] Implementar JWT con Passport
-- [ ] Encriptación de contraseñas con bcrypt
-- [ ] Middleware de autenticación
-- [ ] DTOs y validaciones para usuarios
-- [ ] Endpoints de registro y login
-- [ ] Guard de autenticación
+- [x] Implementar JWT con Passport
+- [x] Encriptación de contraseñas con bcrypt
+- [x] Middleware de autenticación
+- [x] DTOs y validaciones para usuarios
+- [x] Endpoints de registro y login
+- [x] Guard de autenticación
 
 #### Entregables
 
-- [ ] API de autenticación funcional
-- [ ] Registro y login de usuarios
-- [ ] Middleware de protección de rutas
+- [x] API de autenticación funcional
+- [x] Registro y login de usuarios
+- [x] Middleware de protección de rutas
 
-**Estado**: ❌ **PENDIENTE** - Solo se ha creado la estructura de carpetas. Falta implementar toda la lógica de autenticación.
+**Estado**: ✅ **COMPLETADO** - Se ha implementado completamente el sistema de autenticación JWT con Passport, encriptación de contraseñas con bcrypt, middleware de autenticación, DTOs con validaciones, y todos los endpoints de usuarios y autenticación.
 
 ---
 
@@ -335,7 +335,7 @@ Al final de cada sprint:
 
 ## 📈 **RESUMEN DEL PROGRESO ACTUAL**
 
-### ✅ **COMPLETADO (Sprint 1 + parte de Sprint 4)**
+### ✅ **COMPLETADO (Sprint 1 + Sprint 2 + parte de Sprint 4)**
 
 - **Configuración base del proyecto**: ✅ 100%
 - **Estructura de carpetas**: ✅ 100%
@@ -345,18 +345,22 @@ Al final de cada sprint:
 - **Configuración de entorno**: ✅ 100%
 - **Dependencias principales**: ✅ 100%
 - **Docker Compose**: ✅ 100%
+- **Sistema de autenticación JWT**: ✅ 100%
+- **Módulo de usuarios completo**: ✅ 100%
+- **Encriptación de contraseñas**: ✅ 100%
+- **Middleware de autenticación**: ✅ 100%
+- **DTOs y validaciones**: ✅ 100%
+- **Endpoints de autenticación**: ✅ 100%
 
-### ❌ **PENDIENTE (Sprints 2, 3, 5 + parte de Sprint 4)**
+### ❌ **PENDIENTE (Sprints 3, 5 + parte de Sprint 4)**
 
-- **Sistema de autenticación**: ❌ 0%
-- **Módulo de usuarios**: ❌ 0%
 - **Módulo de deudas**: ❌ 0%
 - **Endpoints de agregaciones**: ❌ 0%
 - **Exportación de datos**: ❌ 0%
 - **Testing**: ❌ 0%
 - **Documentación de API**: ❌ 0%
 
-### 📊 **PROGRESO GENERAL: ~25% COMPLETADO**
+### 📊 **PROGRESO GENERAL: ~50% COMPLETADO**
 
 ---
 

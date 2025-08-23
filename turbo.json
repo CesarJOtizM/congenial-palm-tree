@@ -40,21 +40,8 @@
       "persistent": true
     },
     "test": {
-      "dependsOn": ["@repo/vitest_config#build"],
+      "dependsOn": ["@repo/config#build"],
       "outputs": ["coverage.json"]
-    },
-    "test:watch": {
-      "dependsOn": ["@repo/vitest_config#build"],
-      "cache": false,
-      "persistent": true
-    },
-    "test:coverage": {
-      "dependsOn": ["@repo/vitest_config#build"],
-      "outputs": ["coverage.json", "coverage/"]
-    },
-    "test:ui": {
-      "dependsOn": ["@repo/vitest_config#build"],
-      "cache": false
     }
   }
 }
