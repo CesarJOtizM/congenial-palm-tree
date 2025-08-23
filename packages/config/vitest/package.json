@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@repo/vitest",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "collect-json-reports": "node dist/scripts/collectCoverageFiles.js",
+    "merge-json-reports": "nyc merge coverage/raw coverage/merged/merged-coverage.json",
+    "report": "nyc report -t coverage/merged --report-dir coverage/report --reporter=html --exclude-after-remap false",
+    "view-report": "echo \"Coverage report available at: $(pwd)/coverage/report/index.html\""
+  },
+  "dependencies": {
+    "vitest": "^3.2.4"
+  },
+  "devDependencies": {
+    "@vitest/coverage-istanbul": "^3.2.4",
+    "@vitest/ui": "3.2.4",
+    "glob": "^11.0.3",
+    "jsdom": "^26.1.0",
+    "nyc": "^17.1.0",
+    "typescript": "latest"
+  }
+}

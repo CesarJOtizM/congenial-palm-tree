@@ -32,10 +32,10 @@
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
+  "dependencies": {
+    "@repo/config": "workspace:*"
+  },
   "devDependencies": {
-    "@repo/eslint_config": "workspace:*",
-    "@repo/typescript_config": "workspace:*",
-    "@repo/vitest_config": "workspace:*",
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.1",

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@repo/env",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "dependencies": {
+    "zod": "^4.0.8",
+    "dotenv": "^17.2.0"
+  },
+  "devDependencies": {
+    "typescript": "5.8.3"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@repo/prettier",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Configuraciones compartidas de Prettier para el monorepo",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "base.js",
+    "astro.js",
+    "react.js",
+    "README.md",
+    "examples/"
+  ],
+  "devDependencies": {
+    "prettier": "^3.6.2",
+    "prettier-plugin-astro": "^0.14.1"
+  },
+  "peerDependencies": {
+    "prettier": ">=3.0.0"
+  }
+}

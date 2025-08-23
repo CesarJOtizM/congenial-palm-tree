@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@repo/config",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./env/index.ts",
+    "./env": "./env/index.ts",
+    "./eslint": "./eslint/index.js",
+    "./prettier": "./prettier/index.js",
+    "./prettier/base.js": "./prettier/base.js",
+    "./prettier/astro.js": "./prettier/astro.js",
+    "./prettier/react.js": "./prettier/react.js",
+    "./stylelint": "./stylelint/index.js",
+    "./typescript": "./typescript/index.ts",
+    "./typescript/base.json": "./typescript/base.json",
+    "./typescript/nextjs.json": "./typescript/nextjs.json",
+    "./typescript/react.json": "./typescript/react.json",
+    "./typescript/astro.json": "./typescript/astro.json",
+    "./vitest": "./vitest/dist/index.js"
+  }
+}

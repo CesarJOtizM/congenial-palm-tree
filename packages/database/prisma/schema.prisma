@@ -1,0 +1,128 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../generated/client"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(255) // Contraseña encriptada con bcrypt
+  fullName  String   @db.VarChar(100)
+  isActive  Boolean  @default(true) // Usuario activo/inactivo
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  refreshToken String? @db.Text
+
+  // Relaciones
+  debtsAsCreditor Debt[]     @relation("CreditorDebts") // Deudas donde el usuario es el acreedor
+  debtsAsDebtor   Debt[]     @relation("DebtorDebts") // Deudas donde el usuario es el deudor
+  auditLogs       AuditLog[] // Logs de auditoría del usuario
+
+  // Índices para optimizar consultas
+  @@index([email])
+  @@index([isActive])
+  @@map("users")
+}
+
+model Debt {
+  id          String     @id @default(uuid())
+  description String     @db.VarChar(500) // Descripción de la deuda
+  amount      Decimal    @db.Decimal(10, 2) // Monto de la deuda (siempre positivo)
+  currency    String     @default("USD") @db.VarChar(3) // Moneda de la deuda (ISO 4217)
+  isPaid      Boolean    @default(false) // Estado de la deuda
+  status      DebtStatus @default(PENDING) // Estado más detallado de la deuda
+
+  // Relaciones con usuarios
+  creditorId String // ID del usuario acreedor (quien prestó)
+  debtorId   String // ID del usuario deudor (quien debe)
+
+  // Fechas
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  dueDate   DateTime? // Fecha de vencimiento opcional
+  paidAt    DateTime? // Fecha cuando se pagó
+
+  // Campos adicionales para mejor funcionalidad
+  notes    String?  @db.Text // Notas adicionales sobre la deuda
+  category String?  @db.VarChar(50) // Categoría de la deuda (comida, transporte, etc.)
+  priority Priority @default(MEDIUM) // Prioridad de la deuda
+
+  // Relaciones
+  creditor User @relation("CreditorDebts", fields: [creditorId], references: [id], onDelete: Cascade)
+  debtor   User @relation("DebtorDebts", fields: [debtorId], references: [id], onDelete: Cascade)
+
+  // Índices para optimizar consultas frecuentes
+  @@index([creditorId, isPaid])
+  @@index([debtorId, isPaid])
+  @@index([status])
+  @@index([dueDate])
+  @@index([createdAt])
+  @@map("debts")
+}
+
+// Enumeraciones para mejor tipado y validación
+enum DebtStatus {
+  PENDING // Pendiente de pago
+  PAID // Pagada
+  OVERDUE // Vencida
+  CANCELLED // Cancelada
+}
+
+enum Priority {
+  LOW // Baja prioridad
+  MEDIUM // Prioridad media
+  HIGH // Alta prioridad
+  URGENT // Urgente
+}
+
+// Modelo para eventos de dominio (opcional, para arquitectura limpia)
+model DomainEvent {
+  id          String   @id @default(uuid())
+  type        String   @db.VarChar(100)
+  payload     Json
+  occurredOn  DateTime @default(now())
+  entityType  String?  @db.VarChar(100)
+  entityId    String?
+  eventSource String?  @db.VarChar(100)
+  isProcessed Boolean  @default(false) // Para procesamiento asíncrono
+
+  // Índices para optimizar consultas de eventos
+  @@index([type])
+  @@index([entityType, entityId])
+  @@index([occurredOn])
+  @@index([isProcessed])
+  @@map("domain_events")
+}
+
+// Modelo para auditoría de cambios (opcional, para trazabilidad)
+model AuditLog {
+  id         String   @id @default(uuid())
+  userId     String? // Usuario que realizó la acción
+  action     String   @db.VarChar(100) // Tipo de acción (CREATE, UPDATE, DELETE)
+  entityType String   @db.VarChar(100) // Tipo de entidad afectada
+  entityId   String // ID de la entidad afectada
+  oldValues  Json? // Valores anteriores (para UPDATE)
+  newValues  Json? // Valores nuevos
+  ipAddress  String?  @db.VarChar(45) // IP del usuario
+  userAgent  String?  @db.Text // User agent del navegador
+  createdAt  DateTime @default(now())
+
+  // Relación opcional con usuario
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  // Índices para auditoría
+  @@index([userId])
+  @@index([action])
+  @@index([entityType, entityId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}

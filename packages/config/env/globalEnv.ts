@@ -1,0 +1,61 @@
+import {
+  getCurrentEnvironment,
+  getEnvironmentInfo,
+  initializeEnvConfig,
+} from './envLoader';
+import { GlobalEnvTypes, envSchema } from './schemas/envSchema';
+
+// Inicializar la configuración de entorno antes de parsear
+initializeEnvConfig();
+
+const globalEnv: GlobalEnvTypes = envSchema.parse(process.env);
+
+export const getEnvConfig = (
+  app: 'next' | 'astro' | 'core',
+  context: 'client' | 'server' | 'both' = 'client'
+) => {
+  const currentEnv = getCurrentEnvironment();
+  const envInfo = getEnvironmentInfo();
+
+  const isDev = globalEnv.NODE_ENV === 'development';
+  const isProd = globalEnv.NODE_ENV === 'production';
+  const isStaging = globalEnv.NODE_ENV === 'staging';
+  const isTest = globalEnv.NODE_ENV === 'test';
+
+  const baseConfig = {
+    // Información del entorno
+    environment: {
+      current: currentEnv,
+      nodeEnv: globalEnv.NODE_ENV,
+      isDev,
+      isProd,
+      isStaging,
+      isTest,
+      info: envInfo,
+    },
+    port: globalEnv.PORT,
+  };
+
+  const privateConfig = {
+    databaseUrl: globalEnv.DATABASE_URL,
+    jwtSecret: globalEnv.JWT_SECRET,
+    jwtExpiresIn: globalEnv.JWT_EXPIRES_IN,
+    postgres: {
+      database: globalEnv.POSTGRES_DB,
+      user: globalEnv.POSTGRES_USER,
+      password: globalEnv.POSTGRES_PASSWORD,
+    },
+    redis: {
+      host: globalEnv.REDIS_HOST,
+      port: globalEnv.REDIS_PORT,
+    },
+  };
+
+  const finalConfig = {
+    ...baseConfig,
+    ...(context === 'client' ? {} : privateConfig),
+    ...(context === 'both' ? privateConfig : {}),
+  };
+
+  return finalConfig;
+};

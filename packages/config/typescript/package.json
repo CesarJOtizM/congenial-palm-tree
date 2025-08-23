@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@repo/typescript",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./base.json": "./base.json",
+    "./nextjs.json": "./nextjs.json",
+    "./react.json": "./react.json",
+    "./astro.json": "./astro.json"
+  }
+}

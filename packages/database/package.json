@@ -1,0 +1,50 @@
+{
+  "name": "@deudas-app/database",
+  "version": "1.0.0",
+  "description": "Paquete de base de datos para la aplicación de gestión de deudas",
+  "main": "index.js",
+  "scripts": {
+    "generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:reset": "prisma migrate reset",
+    "db:seed": "ts-node seeds/seed.ts",
+    "db:studio": "prisma studio",
+    "db:validate": "prisma validate",
+    "db:format": "prisma format",
+    "db:generate": "prisma generate",
+    "db:seed:dev": "ts-node seeds/seed.ts",
+    "db:seed:prod": "node seeds/seed.js"
+  },
+  "keywords": [
+    "prisma",
+    "postgresql",
+    "database",
+    "deudas",
+    "typescript"
+  ],
+  "author": "Equipo de Desarrollo",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^6.14.0",
+    "bcrypt": "^5.1.1"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/node": "^20.0.0",
+    "prisma": "^6.14.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "@prisma/client": "^6.14.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "prisma": {
+    "schema": "prisma/schema.prisma",
+    "seed": "ts-node seeds/seed.ts"
+  }
+}
