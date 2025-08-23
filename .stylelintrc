@@ -1,3 +1,9 @@
 {
-  "extends": ["@repo/stylelint_config"]
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "selector-class-pattern": null,
+    "string-no-newline": null,
+    "function-no-unknown": null,
+    "custom-property-pattern": null
+  }
 }

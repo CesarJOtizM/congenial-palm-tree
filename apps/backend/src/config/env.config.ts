@@ -1,11 +1,11 @@
-import { getEnvConfig } from '@repo/config/env';
+import { getEnvServerConfig } from '@repo/config/env';
 
 /**
  * Configuración de entorno para la aplicación backend
  * Usa el paquete @repo/config con contexto 'server' para obtener
  * todas las variables de entorno necesarias
  */
-export const envConfig = getEnvConfig('server');
+export const envConfig = getEnvServerConfig();
 
 /**
  * Configuración de la base de datos

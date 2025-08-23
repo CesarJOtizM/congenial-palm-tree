@@ -1,0 +1,46 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
+    "start": "next start",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "eslint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "eslint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "stylelint": "stylelint \"**/*.{css,scss}\"",
+    "stylelint:fix": "stylelint \"**/*.{css,scss}\" --fix",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest --watch",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "next": "15.5.0",
+    "@repo/config": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.0",
+    "@eslint/eslintrc": "^3",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/user-event": "^14.5.2",
+    "jsdom": "^26.1.0",
+    "vitest": "^3.2.4",
+    "@vitest/coverage-istanbul": "^3.2.4",
+    "@vitest/ui": "^3.2.4"
+  }
+}

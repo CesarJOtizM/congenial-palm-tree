@@ -15,20 +15,20 @@ export const sharedConfig = {
           },
         ],
       ] as const,
-      enabled: true,
+      enabled: false, // Cambiado a false para evitar duplicación
       // Configuración adicional para mejor experiencia
       exclude: [
         'node_modules/**',
         'dist/**',
         'build/**',
         'coverage/**',
-        '**/*.d.ts',
-        '**/*.config.*',
+        '**/*.test.*',
+        '**/*.spec.*',
         '**/test/**',
         '**/tests/**',
         '**/__tests__/**',
-        '**/*.test.*',
-        '**/*.spec.*',
+        '**/*.d.ts',
+        '**/*.config.*',
       ],
       // Umbrales de cobertura al 100% - OBLIGATORIO
       thresholds: {

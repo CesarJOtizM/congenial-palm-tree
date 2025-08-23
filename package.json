@@ -17,7 +17,6 @@
     "test": "turbo run test",
     "test:watch": "turbo run test:watch",
     "test:coverage": "turbo run test:coverage",
-    "view:report": "turbo run view-report",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -27,6 +26,7 @@
     "lint-staged": "^16.1.5",
     "prettier": "^3.6.2",
     "stylelint": "^16.23.1",
+    "stylelint-config-standard": "^39.0.0",
     "tsc-alias": "^1.8.16",
     "turbo": "^2.5.6",
     "typescript": "5.9.2",

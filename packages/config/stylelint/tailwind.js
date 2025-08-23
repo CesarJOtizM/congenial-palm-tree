@@ -81,7 +81,7 @@ export const tailwindConfig = {
     'at-rule-no-unknown': [
       true,
       {
-        ignoreAtRules: ['tailwind', 'apply', 'layer', 'screen'],
+        ignoreAtRules: ['tailwind', 'apply', 'layer', 'screen', 'theme'],
       },
     ],
   },

@@ -22,6 +22,10 @@ export const envSchema = z.object({
   // Variables específicas de JWT
   JWT_SECRET: z.string().min(32).optional(),
   JWT_EXPIRES_IN: z.string().default('24h'),
+
+  // Variables específicas del cliente
+  NEXT_PUBLIC_API_URL: z.string().url().default('http://localhost:3001/api'),
+  NEXT_PUBLIC_API_VERSION: z.string().default('v1'),
 });
 
 export type GlobalEnvTypes = z.infer<typeof envSchema>;

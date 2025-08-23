@@ -42,6 +42,15 @@
     "test": {
       "dependsOn": ["@repo/config#build"],
       "outputs": ["coverage.json"]
+    },
+    "test:watch": {
+      "dependsOn": ["@repo/config#build"],
+      "cache": false,
+      "persistent": true
+    },
+    "test:coverage": {
+      "dependsOn": ["@repo/config#build"],
+      "outputs": ["coverage.json"]
     }
   }
 }

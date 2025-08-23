@@ -10,9 +10,7 @@ initializeEnvConfig();
 
 const globalEnv: GlobalEnvTypes = envSchema.parse(process.env);
 
-export const getEnvConfig = (
-  context: 'client' | 'server' | 'both' = 'client'
-) => {
+export const getEnvServerConfig = () => {
   const currentEnv = getCurrentEnvironment();
   const envInfo = getEnvironmentInfo();
 
@@ -35,7 +33,7 @@ export const getEnvConfig = (
     port: globalEnv.PORT,
   };
 
-  const privateConfig = {
+  const serverConfig = {
     databaseUrl: globalEnv.DATABASE_URL,
     jwtSecret: globalEnv.JWT_SECRET,
     jwtExpiresIn: globalEnv.JWT_EXPIRES_IN,
@@ -52,8 +50,45 @@ export const getEnvConfig = (
 
   const finalConfig = {
     ...baseConfig,
-    ...(context === 'client' ? {} : privateConfig),
-    ...(context === 'both' ? privateConfig : {}),
+    ...serverConfig,
+  };
+
+  return finalConfig;
+};
+
+export const getEnvClientConfig = () => {
+  const currentEnv = getCurrentEnvironment();
+  const envInfo = getEnvironmentInfo();
+
+  const isDev = globalEnv.NODE_ENV === 'development';
+  const isProd = globalEnv.NODE_ENV === 'production';
+  const isStaging = globalEnv.NODE_ENV === 'staging';
+  const isTest = globalEnv.NODE_ENV === 'test';
+
+  const baseConfig = {
+    // Información del entorno
+    environment: {
+      current: currentEnv,
+      nodeEnv: globalEnv.NODE_ENV,
+      isDev,
+      isProd,
+      isStaging,
+      isTest,
+      info: envInfo,
+    },
+    port: globalEnv.PORT,
+  };
+
+  const clientConfig = {
+    api: {
+      url: globalEnv.NEXT_PUBLIC_API_URL,
+      version: globalEnv.NEXT_PUBLIC_API_VERSION,
+    },
+  };
+
+  const finalConfig = {
+    ...baseConfig,
+    ...clientConfig,
   };
 
   return finalConfig;
