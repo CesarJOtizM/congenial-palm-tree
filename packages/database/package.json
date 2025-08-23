@@ -2,8 +2,25 @@
   "name": "@deudas-app/database",
   "version": "1.0.0",
   "description": "Paquete de base de datos para la aplicación de gestión de deudas",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/**/*",
+    "prisma/**/*"
+  ],
   "scripts": {
+    "build": "rm -rf dist && tsc && cp -r generated dist/ && cp -r prisma dist/",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "prepublishOnly": "npm run build",
     "generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
@@ -32,7 +49,9 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/fs-extra": "^11.0.4",
     "@types/node": "^20.0.0",
+    "fs-extra": "^11.3.1",
     "prisma": "^6.14.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.0.0"

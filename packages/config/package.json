@@ -5,8 +5,8 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./env/index.ts",
-    "./env": "./env/index.ts",
+    ".": "./env/dist/index.js",
+    "./env": "./env/dist/index.js",
     "./eslint": "./eslint/index.js",
     "./prettier": "./prettier/index.js",
     "./prettier/base.js": "./prettier/base.js",

@@ -1,0 +1,35 @@
+# Archivos de desarrollo
+src/
+seeds/
+*.ts
+*.tsx
+!*.d.ts
+
+# Archivos de configuración de desarrollo
+tsconfig.json
+.eslintrc*
+.prettierrc*
+
+# Archivos temporales
+*.log
+*.tmp
+.cache/
+
+# Archivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de testing
+coverage/
+*.test.ts
+*.spec.ts
+
+# Archivos de build
+dist/*.map
+dist/*.d.ts.map

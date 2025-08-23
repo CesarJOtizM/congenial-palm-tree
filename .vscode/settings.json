@@ -48,6 +48,10 @@
     "*.service.ts": "nest-service",
     "*.middleware.ts": "nest-middleware",
     "*.filter.ts": "nest-filter",
-  },
-
+    "*.pipe.ts": "nest-pipe",
+    "*.gateway.ts": "nest-gateway",
+    "*.decorator.ts": "nest-decorator",
+    "*.guard.ts": "nest-guard",
+    "*.resolver.ts": "nest-resolver"
+  }
 }

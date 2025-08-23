@@ -2,13 +2,13 @@ services:
   # Base de datos PostgreSQL
   postgres:
     image: postgres:15-alpine
-    container_name: vitawallet-postgres
+    container_name: deudas-postgres
     env_file:
       - .env.${ENV_FILE:-development}.local
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-vitawallet}
-      POSTGRES_USER: ${POSTGRES_USER:-vitawallet_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-vitawallet_password}
+      POSTGRES_DB: ${POSTGRES_DB:-deudas_app}
+      POSTGRES_USER: ${POSTGRES_USER:-deudas_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-deudas_password}
     ports:
       - '5432:5432'
     volumes:
@@ -16,24 +16,40 @@ services:
       - ./scripts/init_db.sh:/docker-entrypoint-initdb.d/01-init_db.sh
       - ./packages/database/prisma:/docker-entrypoint-initdb.d/02-prisma
     networks:
-      - vitawallet-network
+      - deudas-network
     healthcheck:
       test:
         [
           'CMD-SHELL',
-          'pg_isready -U $${POSTGRES_USER:-vitawallet_user} -d $${POSTGRES_DB:-vitawallet}',
+          'pg_isready -U $${POSTGRES_USER:-deudas_user} -d $${POSTGRES_DB:-deudas_app}',
         ]
       interval: 10s
       timeout: 5s
       retries: 5
 
+  # Redis para caché
+  redis:
+    image: redis:7-alpine
+    container_name: deudas-redis
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    networks:
+      - deudas-network
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command: redis-server --appendonly yes
 
   # Prisma Studio para desarrollo
   prisma-studio:
     build:
       context: .
       dockerfile: packages/database/Dockerfile
-    container_name: vitawallet-prisma-studio
+    container_name: deudas-prisma-studio
     env_file:
       - .env.${ENV_FILE:-development}.local
     environment:
@@ -45,12 +61,13 @@ services:
       postgres:
         condition: service_healthy
     networks:
-      - vitawallet-network
+      - deudas-network
     command: bun run db:studio
 
 volumes:
   postgres_data:
+  redis_data:
 
 networks:
-  vitawallet-network:
+  deudas-network:
     driver: bridge

@@ -1,18 +1,30 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app.module';
-import { serverConfig, validateEnvironment } from './config/env.config';
+import { serverConfig } from './config/env.config';
 
 async function bootstrap() {
-  // Validar variables de entorno críticas
-  validateEnvironment();
+  const app = await NestFactory.create(AppModule, {
+    logger: ['log', 'error', 'warn', 'debug', 'verbose'],
+  });
 
-  const app = await NestFactory.create(AppModule);
+  // Configurar validación global
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    })
+  );
 
-  const port = serverConfig.port;
+  // Configurar CORS
+  app.enableCors();
+
+  const port = serverConfig.port || 3000;
   await app.listen(port);
 
-  console.log(`🚀 Servidor backend ejecutándose en puerto ${port}`);
-  console.log(`🌍 Entorno: ${serverConfig.environment}`);
+  console.log(`🚀 Application running on http://localhost:${port}`);
+  console.log(`🌍 Environment: ${serverConfig.environment}`);
 }
 bootstrap();

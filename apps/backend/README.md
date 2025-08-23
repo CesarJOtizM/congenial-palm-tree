@@ -1,98 +1,128 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🚀 Backend - Gestión de Deudas
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend desarrollado en **NestJS + TypeScript** para la aplicación de gestión de deudas entre amigos.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🏗️ Arquitectura
 
-## Description
+- **Framework**: NestJS con TypeScript
+- **Base de Datos**: PostgreSQL con Prisma ORM
+- **Caché**: Redis
+- **Autenticación**: JWT con Passport
+- **Validaciones**: class-validator + class-transformer
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 📋 Prerrequisitos
 
-## Project setup
+- Node.js 18+
+- PostgreSQL 13+
+- Redis 6+
+- Bun (recomendado) o npm
+
+## 🚀 Instalación y Configuración
+
+### 1. Instalar dependencias
 
 ```bash
-$ npm install
+bun install
 ```
 
-## Compile and run the project
+### 2. Configurar variables de entorno
+
+Copia el archivo de ejemplo y configura las variables:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+cp ../../example.env.local .env.local
 ```
 
-## Run tests
+### 3. Generar cliente de Prisma
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+cd ../../packages/database
+bun run generate
+cd ../../apps/backend
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 4. Ejecutar migraciones
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+cd ../../packages/database
+bun run db:push
+cd ../../apps/backend
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## 🏃‍♂️ Comandos de Desarrollo
 
-## Resources
+```bash
+# Desarrollo con hot reload
+bun run start:dev
 
-Check out a few resources that may come in handy when working with NestJS:
+# Compilar para producción
+bun run build
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# Ejecutar en producción
+bun run start:prod
 
-## Support
+# Ejecutar pruebas
+bun run test
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# Verificar tipos
+bun run check-types
 
-## Stay in touch
+# Probar conexión a base de datos
+bun run test:db
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## 📁 Estructura del Proyecto
 
-## License
+```
+src/
+├── auth/                    # Autenticación JWT
+├── users/                   # Gestión de usuarios
+├── debts/                   # Gestión de deudas
+├── common/                  # Recursos compartidos
+├── database/                # Configuración de base de datos
+├── cache/                   # Sistema de caché con Redis
+└── config/                  # Configuración de entorno
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## 🔧 Configuración de Base de Datos
+
+El proyecto usa **Prisma** como ORM, configurado en el paquete `@deudas-app/database`.
+
+### Modelos principales:
+
+- **User**: Usuarios del sistema
+- **Debt**: Deudas entre usuarios
+- **AuditLog**: Logs de auditoría
+- **DomainEvent**: Eventos de dominio
+
+## 🌐 Endpoints de la API
+
+La API estará disponible en `http://localhost:3000` (configurable via `PORT`).
+
+## 📊 Estado del Proyecto
+
+- ✅ **Sprint 1**: Configuración base completada
+- 🔄 **Sprint 2**: Autenticación y usuarios (en progreso)
+- ⏳ **Sprint 3**: Módulo de deudas
+- ⏳ **Sprint 4**: Caché y optimizaciones
+- ⏳ **Sprint 5**: Testing y documentación
+
+## 🐛 Solución de Problemas
+
+### Error de conexión a PostgreSQL
+
+Verifica que PostgreSQL esté ejecutándose y las variables de entorno estén correctas.
+
+### Error de conexión a Redis
+
+Verifica que Redis esté ejecutándose en el puerto configurado.
+
+### Error de compilación
+
+Ejecuta `bun run build` para ver errores detallados.
+
+## 📚 Recursos Adicionales
+
+- [Documentación de NestJS](https://docs.nestjs.com/)
+- [Documentación de Prisma](https://www.prisma.io/docs/)
+- [Plan de Trabajo](../docs/plan-trabajo-backend.md)

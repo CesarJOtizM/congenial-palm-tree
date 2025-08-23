@@ -1,9 +1,8 @@
 {
   "extends": "@repo/config/typescript/base.json",
   "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "resolvePackageJsonExports": true,
+    "module": "CommonJS",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "isolatedModules": true,
     "declaration": true,
@@ -24,7 +23,20 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@/*": ["./src/*"],
-      "@repo/*": ["../../packages/*"]
+      "@app/*": ["./src/*"],
+      "@modules/*": ["./src/*"],
+      "@common/*": ["./src/common/*"],
+      "@config/*": ["./src/config/*"],
+      "@database/*": ["./src/database/*"],
+      "@cache/*": ["./src/cache/*"],
+      "@auth/*": ["./src/auth/*"],
+      "@users/*": ["./src/users/*"],
+      "@debts/*": ["./src/debts/*"],
+      "@decorators/*": ["./src/common/decorators/*"],
+      "@dto/*": ["./src/common/dto/*"],
+      "@filters/*": ["./src/common/filters/*"],
+      "@interfaces/*": ["./src/common/interfaces/*"],
+      "@test/*": ["./test/*"]
     }
   },
   "include": ["src/**/*", "test/**/*"],

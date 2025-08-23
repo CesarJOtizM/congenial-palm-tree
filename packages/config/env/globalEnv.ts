@@ -11,7 +11,6 @@ initializeEnvConfig();
 const globalEnv: GlobalEnvTypes = envSchema.parse(process.env);
 
 export const getEnvConfig = (
-  app: 'next' | 'astro' | 'core',
   context: 'client' | 'server' | 'both' = 'client'
 ) => {
   const currentEnv = getCurrentEnvironment();

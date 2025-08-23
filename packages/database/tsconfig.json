@@ -4,10 +4,15 @@
     "outDir": "./dist",
     "rootDir": "./",
     "baseUrl": ".",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "module": "CommonJS",
+    "moduleResolution": "node",
     "paths": {
       "@/*": ["./*"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["**/*.ts", "**/*.tsx", "generated/**/*"],
+  "exclude": ["node_modules", "dist", "seeds", "**/*.test.ts", "**/*.spec.ts"]
 }
