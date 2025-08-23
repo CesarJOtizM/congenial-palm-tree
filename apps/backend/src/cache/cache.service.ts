@@ -30,6 +30,24 @@ export class CacheService {
     }
   }
 
+  async del(key: string): Promise<void> {
+    try {
+      await this.redis.del(key);
+    } catch (error) {
+      this.logger.error(`Error deleting cache for key '${key}':`, error);
+    }
+  }
+
+  async getKeys(pattern: string): Promise<string[]> {
+    try {
+      const keys = await this.redis.keys(pattern);
+      return keys;
+    } catch (error) {
+      this.logger.error(`Error getting keys for pattern '${pattern}':`, error);
+      return [];
+    }
+  }
+
   async delete(key: string): Promise<void> {
     try {
       await this.redis.del(key);

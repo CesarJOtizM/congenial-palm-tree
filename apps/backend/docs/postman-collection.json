@@ -321,6 +321,251 @@
       "description": "Endpoints para gestión de usuarios"
     },
     {
+      "name": "💰 Deudas",
+      "item": [
+        {
+          "name": "1. Crear Deuda",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Dinner at restaurant\",\n  \"amount\": 25.50,\n  \"currency\": \"USD\",\n  \"creditorId\": \"{{userId}}\",\n  \"debtorId\": \"debtor-user-id-here\",\n  \"dueDate\": \"2024-12-31T23:59:59.000Z\",\n  \"notes\": \"Pay before end of month\",\n  \"category\": \"food\",\n  \"priority\": \"MEDIUM\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/debts",
+              "host": ["{{baseUrl}}"],
+              "path": ["debts"]
+            },
+            "description": "Crea una nueva deuda (solo el acreedor puede crear)"
+          },
+          "response": []
+        },
+        {
+          "name": "2. Obtener Todas las Deudas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/debts?page=1&limit=10&status=PENDING&isPaid=false&priority=MEDIUM&category=food&search=dinner&sortBy=createdAt&sortOrder=desc",
+              "host": ["{{baseUrl}}"],
+              "path": ["debts"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "status",
+                  "value": "PENDING"
+                },
+                {
+                  "key": "isPaid",
+                  "value": "false"
+                },
+                {
+                  "key": "priority",
+                  "value": "MEDIUM"
+                },
+                {
+                  "key": "category",
+                  "value": "food"
+                },
+                {
+                  "key": "search",
+                  "value": "dinner"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "createdAt"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "desc"
+                }
+              ]
+            },
+            "description": "Obtiene lista paginada de deudas con filtros avanzados"
+          },
+          "response": []
+        },
+        {
+          "name": "3. Obtener Deuda por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/debts/debt-id-here",
+              "host": ["{{baseUrl}}"],
+              "path": ["debts", "debt-id-here"]
+            },
+            "description": "Obtiene una deuda específica por su ID"
+          },
+          "response": []
+        },
+        {
+          "name": "4. Actualizar Deuda",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Updated dinner at restaurant\",\n  \"amount\": 30.00,\n  \"notes\": \"Updated notes\",\n  \"category\": \"food\",\n  \"priority\": \"HIGH\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/debts/debt-id-here",
+              "host": ["{{baseUrl}}"],
+              "path": ["debts", "debt-id-here"]
+            },
+            "description": "Actualiza una deuda (solo el acreedor puede modificar)"
+          },
+          "response": []
+        },
+        {
+          "name": "5. Marcar Deuda como Pagada",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/debts/debt-id-here/mark-as-paid",
+              "host": ["{{baseUrl}}"],
+              "path": ["debts", "debt-id-here", "mark-as-paid"]
+            },
+            "description": "Marca una deuda como pagada (solo el acreedor puede hacerlo)"
+          },
+          "response": []
+        },
+        {
+          "name": "6. Eliminar Deuda",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/debts/debt-id-here",
+              "host": ["{{baseUrl}}"],
+              "path": ["debts", "debt-id-here"]
+            },
+            "description": "Elimina una deuda (solo el acreedor puede eliminar, no deudas pagadas)"
+          },
+          "response": []
+        },
+        {
+          "name": "7. Obtener Estadísticas de Exportación",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/debts/export/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["debts", "export", "stats"]
+            },
+            "description": "Obtiene estadísticas de exportación y opciones disponibles"
+          },
+          "response": []
+        },
+        {
+          "name": "8. Exportar Deudas",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"format\": \"json\",\n  \"status\": \"PENDING\",\n  \"priority\": \"MEDIUM\",\n  \"category\": \"food\",\n  \"search\": \"dinner\",\n  \"startDate\": \"2024-01-01T00:00:00.000Z\",\n  \"endDate\": \"2024-12-31T23:59:59.000Z\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/debts/export",
+              "host": ["{{baseUrl}}"],
+              "path": ["debts", "export"]
+            },
+            "description": "Exporta deudas en formato JSON o CSV con filtros aplicados"
+          },
+          "response": []
+        }
+      ],
+      "description": "Endpoints para gestión completa de deudas"
+    },
+    {
+      "name": "📊 Dashboard",
+      "item": [
+        {
+          "name": "1. Resumen del Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/debts/dashboard/summary",
+              "host": ["{{baseUrl}}"],
+              "path": ["debts", "dashboard", "summary"]
+            },
+            "description": "Obtiene resumen completo del dashboard con estadísticas de deudas"
+          },
+          "response": []
+        }
+      ],
+      "description": "Endpoints para el dashboard y resumen de deudas"
+    },
+    {
       "name": "🏥 Health Check",
       "item": [
         {

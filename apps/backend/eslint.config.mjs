@@ -20,8 +20,6 @@ export default [
       },
     },
     rules: {
-      // Reglas específicas para el backend
-      '@typescript-eslint/no-explicit-any': 'off',
       // Permitir console.log en desarrollo para el backend
       'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
       // Desactivar la convención de nombres de archivos para el backend ya que NestJS usa un formato específico

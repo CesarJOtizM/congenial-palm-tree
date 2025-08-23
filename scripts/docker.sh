@@ -208,28 +208,28 @@ redis_shell() {
 # Función para Prisma Studio
 prisma_studio() {
     echo -e "${BLUE}🚀 Abriendo Prisma Studio...${NC}"
-    $DOCKER_COMPOSE_CMD exec backend npx prisma studio
+    $DOCKER_COMPOSE_CMD exec backend sh -c "cd packages/database && bun run db:studio"
     echo -e "${GREEN}✅ Prisma Studio abierto${NC}"
 }
 
 # Función para migraciones de Prisma
 prisma_migrate() {
     echo -e "${BLUE}🚀 Ejecutando migraciones de Prisma...${NC}"
-    $DOCKER_COMPOSE_CMD exec backend npx prisma migrate dev
+    $DOCKER_COMPOSE_CMD exec backend sh -c "cd packages/database && bun run db:migrate"
     echo -e "${GREEN}✅ Migraciones ejecutadas${NC}"
 }
 
 # Función para generar cliente Prisma
 prisma_generate() {
     echo -e "${BLUE}🚀 Generando cliente de Prisma...${NC}"
-    $DOCKER_COMPOSE_CMD exec backend npx prisma generate
+    $DOCKER_COMPOSE_CMD exec backend sh -c "cd packages/database && bun run db:generate"
     echo -e "${GREEN}✅ Cliente de Prisma generado${NC}"
 }
 
 # Función para seed de Prisma
 prisma_seed() {
     echo -e "${BLUE}🚀 Ejecutando seed de Prisma...${NC}"
-    $DOCKER_COMPOSE_CMD exec backend npx prisma db seed
+    $DOCKER_COMPOSE_CMD exec backend sh -c "cd packages/database && bun run db:seed"
     echo -e "${GREEN}✅ Seed ejecutado${NC}"
 }
 
@@ -240,7 +240,7 @@ prisma_reset() {
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         echo -e "${YELLOW}🔄 Reseteando base de datos...${NC}"
-        $DOCKER_COMPOSE_CMD exec backend npx prisma migrate reset --force
+        $DOCKER_COMPOSE_CMD exec backend sh -c "cd packages/database && bun run db:reset"
         echo -e "${GREEN}✅ Reset de base de datos completado${NC}"
     else
         echo -e "${YELLOW}❌ Reset de base de datos cancelado${NC}"
@@ -250,7 +250,7 @@ prisma_reset() {
 # Función para desplegar esquema Prisma
 prisma_deploy() {
     echo -e "${BLUE}🚀 Desplegando esquema de Prisma...${NC}"
-    $DOCKER_COMPOSE_CMD exec backend npx prisma db push
+    $DOCKER_COMPOSE_CMD exec backend sh -c "cd packages/database && bun run db:push"
     echo -e "${GREEN}✅ Esquema desplegado${NC}"
 }
 
