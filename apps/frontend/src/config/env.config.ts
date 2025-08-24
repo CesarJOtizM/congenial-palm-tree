@@ -1,8 +1,4 @@
-import { getEnvClientConfig } from '@repo/config/env';
-
-const envConfig = getEnvClientConfig();
-
 export const apiConfig = {
-  url: envConfig.api.url,
-  version: envConfig.api.version,
+  url: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080',
+  version: process.env.NEXT_PUBLIC_API_VERSION,
 };

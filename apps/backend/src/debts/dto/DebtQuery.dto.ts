@@ -1,7 +1,9 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Transform, Type } from 'class-transformer';
 import {
   IsBoolean,
   IsEnum,
+  IsNumber,
   IsOptional,
   IsString,
   IsUUID,
@@ -16,6 +18,13 @@ export class DebtQueryDto {
     default: 1,
   })
   @IsOptional()
+  @Transform(({ value }) => {
+    if (value === undefined || value === null) return 1;
+    const parsed = parseInt(value, 10);
+    return isNaN(parsed) ? 1 : parsed;
+  })
+  @Type(() => Number)
+  @IsNumber()
   page?: number = 1;
 
   @ApiPropertyOptional({
@@ -24,6 +33,13 @@ export class DebtQueryDto {
     default: 10,
   })
   @IsOptional()
+  @Transform(({ value }) => {
+    if (value === undefined || value === null) return 10;
+    const parsed = parseInt(value, 10);
+    return isNaN(parsed) ? 10 : parsed;
+  })
+  @Type(() => Number)
+  @IsNumber()
   limit?: number = 10;
 
   @ApiPropertyOptional({

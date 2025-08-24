@@ -36,7 +36,7 @@ COPY packages/database ./packages/database/
 COPY apps/backend/package.json ./apps/backend/
 
 # Instalar todas las dependencias
-RUN bun install --frozen-lockfile
+RUN bun install
 
 # ======================================
 # 🏗️ Builder Stage

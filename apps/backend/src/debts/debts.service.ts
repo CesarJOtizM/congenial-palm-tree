@@ -112,8 +112,21 @@ export class DebtsService {
       `Getting debts for user: ${userId} with filters: ${JSON.stringify(query)}`
     );
 
-    const { page = 1, limit = 10, ...filters } = query;
-    const skip = (page - 1) * limit;
+    // Asegurar que page y limit sean números
+    const pageNum =
+      typeof query.page === 'string'
+        ? parseInt(query.page, 10)
+        : query.page || 1;
+    const limitNum =
+      typeof query.limit === 'string'
+        ? parseInt(query.limit, 10)
+        : query.limit || 10;
+
+    const skip = (pageNum - 1) * limitNum;
+
+    // Extraer el resto de filtros
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { page, limit, ...filters } = query;
 
     // Build query filters
     const where: any = {
@@ -184,18 +197,18 @@ export class DebtsService {
         },
         orderBy,
         skip,
-        take: limit,
+        take: limitNum,
       }),
       this.prisma.debt.count({ where }),
     ]);
 
-    const totalPages = Math.ceil(total / limit);
+    const totalPages = Math.ceil(total / limitNum);
 
     return {
       debts: debts.map(debt => this.mapToDebtResponse(debt)) as DebtWithUsers[],
       total,
-      page,
-      limit,
+      page: pageNum,
+      limit: limitNum,
       totalPages,
     };
   }

@@ -14,9 +14,13 @@ NC='\033[0m' # No Color
 
 # Función para mostrar ayuda
 show_help() {
+    local backend_port=$(get_backend_port)
     echo -e "${BLUE}🐳 Docker Utilities - Deudas App${NC}"
     echo ""
     echo "Uso: $0 [COMANDO] [OPCIONES]"
+    echo ""
+    echo "CONFIGURACIÓN:"
+    echo "  Puerto del Backend: ${backend_port} (configurado en .env.local o variable PORT)"
     echo ""
     echo "COMANDOS DISPONIBLES:"
     echo "  dev         - Levantar servicios para desarrollo (backend + db + redis)"
@@ -72,36 +76,55 @@ get_docker_compose_cmd() {
 # Variable global para el comando de docker-compose
 DOCKER_COMPOSE_CMD=""
 
+# Función para obtener el puerto del backend
+get_backend_port() {
+    # Intentar obtener el puerto desde variables de entorno
+    local port=${PORT:-8080}
+
+    # Si no hay variable PORT, intentar leer desde .env
+    if [ -f ".env.local" ]; then
+        local env_port=$(grep "^PORT=" .env.local | cut -d'=' -f2 | tr -d '"' | tr -d "'")
+        if [ -n "$env_port" ]; then
+            port=$env_port
+        fi
+    fi
+
+    echo "$port"
+}
+
 # Función para desarrollo básico
 dev() {
+    local backend_port=$(get_backend_port)
     echo -e "${GREEN}🚀 Iniciando servicios para desarrollo...${NC}"
     $DOCKER_COMPOSE_CMD up -d postgres redis backend
     echo -e "${GREEN}✅ Servicios iniciados:${NC}"
-    echo "  - Backend: http://localhost:3000"
+    echo "  - Backend: http://localhost:${backend_port}"
     echo "  - PostgreSQL: localhost:5432"
     echo "  - Redis: localhost:6379"
 }
 
 # Función para desarrollo completo
 dev_full() {
+    local backend_port=$(get_backend_port)
     echo -e "${GREEN}🚀 Iniciando todos los servicios para desarrollo...${NC}"
     $DOCKER_COMPOSE_CMD --profile dev up -d
     echo -e "${GREEN}✅ Todos los servicios iniciados:${NC}"
-    echo "  - Backend: http://localhost:3000"
+    echo "  - Backend: http://localhost:${backend_port}"
     echo "  - PostgreSQL: localhost:5432"
     echo "  - Redis: localhost:6379"
     echo "  - Prisma Studio: http://localhost:5555"
-    echo "  - pgAdmin: http://localhost:8080 (admin@deudas.com / admin123)"
+    echo "  - pgAdmin: http://localhost:8082 (admin@deudas.com / admin123)"
     echo "  - Redis Commander: http://localhost:8081 (admin / admin123)"
 }
 
 # Función para producción
 prod() {
+    local backend_port=$(get_backend_port)
     echo -e "${GREEN}🚀 Iniciando servicios para producción...${NC}"
     $DOCKER_COMPOSE_CMD --profile prod up -d
     echo -e "${GREEN}✅ Servicios de producción iniciados:${NC}"
     echo "  - API Gateway (Nginx): http://localhost"
-    echo "  - Backend: http://localhost/api"
+    echo "  - Backend: http://localhost/api (puerto interno: ${backend_port})"
     echo "  - Health Check: http://localhost/health"
 }
 

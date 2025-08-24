@@ -20,10 +20,10 @@ RUN bun install
 COPY . .
 
 # Generar el cliente de Prisma
-RUN bun run db:generate
+RUN cd packages/database && bun run db:generate
 
 # Exponer puerto para Prisma Studio
 EXPOSE 5555
 
 # Comando por defecto
-CMD ["bun", "run", "db:studio"]
+CMD ["sh", "-c", "cd packages/database && bun run db:studio"]
