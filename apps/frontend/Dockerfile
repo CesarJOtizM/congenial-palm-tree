@@ -13,8 +13,8 @@ COPY package.json bun.lock turbo.json ./
 # Copiar directorios de paquetes completos (necesario para workspaces)
 COPY packages/ ./packages/
 
-# Copiar directorio de la aplicación
-COPY apps/web_next/ ./apps/web_next/
+# Copiar directorio de la aplicación frontend
+COPY apps/frontend/ ./apps/frontend/
 
 # Instalar dependencias
 RUN bun install
@@ -22,11 +22,8 @@ RUN bun install
 # Copiar el resto del código fuente
 COPY . .
 
-# Generar el cliente de Prisma
-RUN bun run db:generate
-
 # Exponer puerto
 EXPOSE 3000
 
-# Comando por defecto
-CMD ["bun", "run", "next:dev"]
+# Comando por defecto para desarrollo
+CMD ["bun", "run", "--cwd", "apps/frontend", "dev", "-p", "3000"]

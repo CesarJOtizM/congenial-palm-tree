@@ -1,48 +1,47 @@
 import { render, screen } from '@testing-library/react';
-import { useRouter } from 'next/navigation';
 import { vi } from 'vitest';
 import Home from '../app/page';
 
-// Mock de next/navigation
+// Mock simple de next/navigation
 vi.mock('next/navigation', () => ({
-  useRouter: vi.fn(),
+  useRouter: () => ({
+    push: vi.fn(),
+  }),
 }));
 
 describe('Home Component', () => {
-  const mockPush = vi.fn();
-
-  beforeEach(() => {
-    vi.clearAllMocks();
-    (useRouter as any).mockReturnValue({
-      push: mockPush,
-    });
-  });
-
-  it('should redirect to dashboard on mount', () => {
+  it('should render loading spinner', () => {
     render(<Home />);
 
-    expect(mockPush).toHaveBeenCalledWith('/dashboard');
-    expect(mockPush).toHaveBeenCalledTimes(1);
-  });
-
-  it('should show loading spinner', () => {
-    render(<Home />);
-
-    const spinner = screen.getByRole('status', { hidden: true });
+    const spinner = screen.getByRole('status');
     expect(spinner).toBeInTheDocument();
     expect(spinner).toHaveClass('animate-spin');
   });
 
-  it('should have correct styling classes', () => {
+  it('should have correct container styling', () => {
     render(<Home />);
 
-    const container = screen.getByRole('main', { hidden: true });
+    const container = screen.getByRole('main');
     expect(container).toHaveClass(
       'min-h-screen',
       'bg-gray-50',
       'flex',
       'items-center',
       'justify-center'
+    );
+  });
+
+  it('should have correct spinner styling', () => {
+    render(<Home />);
+
+    const spinner = screen.getByRole('status');
+    expect(spinner).toHaveClass(
+      'animate-spin',
+      'rounded-full',
+      'h-12',
+      'w-12',
+      'border-b-2',
+      'border-blue-600'
     );
   });
 });

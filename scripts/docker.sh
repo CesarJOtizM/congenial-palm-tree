@@ -32,9 +32,10 @@ show_help() {
     echo "  clean       - Limpiar contenedores, imágenes y volúmenes"
     echo "  reset       - Reset completo (stop + clean + rebuild)"
     echo "  health      - Verificar estado de los servicios"
-    echo "  shell       - Acceder al shell del backend"
-    echo "  db-shell    - Acceder al shell de PostgreSQL"
-    echo "  redis-shell - Acceder al shell de Redis"
+    echo "  shell           - Acceder al shell del backend"
+    echo "  frontend-shell  - Acceder al shell del frontend"
+    echo "  db-shell        - Acceder al shell de PostgreSQL"
+    echo "  redis-shell     - Acceder al shell de Redis"
     echo ""
     echo "COMANDOS DE PRISMA:"
     echo "  prisma:studio    - Abrir Prisma Studio en el navegador"
@@ -47,8 +48,10 @@ show_help() {
     echo "EJEMPLOS:"
     echo "  $0 dev              # Iniciar desarrollo"
     echo "  $0 dev-full         # Desarrollo con herramientas"
+    echo "  $0 logs frontend    # Ver logs del frontend"
     echo "  $0 logs backend     # Ver logs del backend"
     echo "  $0 shell            # Shell del contenedor backend"
+    echo "  $0 frontend-shell   # Shell del contenedor frontend"
     echo "  $0 prisma:migrate   # Ejecutar migraciones"
     echo "  $0 prisma:seed      # Ejecutar seed"
 }
@@ -96,8 +99,9 @@ get_backend_port() {
 dev() {
     local backend_port=$(get_backend_port)
     echo -e "${GREEN}🚀 Iniciando servicios para desarrollo...${NC}"
-    $DOCKER_COMPOSE_CMD up -d postgres redis backend
+    $DOCKER_COMPOSE_CMD --profile dev up -d postgres redis backend frontend
     echo -e "${GREEN}✅ Servicios iniciados:${NC}"
+    echo "  - Frontend: http://localhost:3000"
     echo "  - Backend: http://localhost:${backend_port}"
     echo "  - PostgreSQL: localhost:5432"
     echo "  - Redis: localhost:6379"
@@ -109,6 +113,7 @@ dev_full() {
     echo -e "${GREEN}🚀 Iniciando todos los servicios para desarrollo...${NC}"
     $DOCKER_COMPOSE_CMD --profile dev up -d
     echo -e "${GREEN}✅ Todos los servicios iniciados:${NC}"
+    echo "  - Frontend: http://localhost:3000"
     echo "  - Backend: http://localhost:${backend_port}"
     echo "  - PostgreSQL: localhost:5432"
     echo "  - Redis: localhost:6379"
@@ -123,6 +128,7 @@ prod() {
     echo -e "${GREEN}🚀 Iniciando servicios para producción...${NC}"
     $DOCKER_COMPOSE_CMD --profile prod up -d
     echo -e "${GREEN}✅ Servicios de producción iniciados:${NC}"
+    echo "  - Frontend: http://localhost"
     echo "  - API Gateway (Nginx): http://localhost"
     echo "  - Backend: http://localhost/api (puerto interno: ${backend_port})"
     echo "  - Health Check: http://localhost/health"
@@ -194,7 +200,7 @@ reset() {
 health() {
     echo -e "${BLUE}🏥 Verificando estado de los servicios...${NC}"
 
-    services=("backend" "postgres" "redis")
+    services=("frontend" "backend" "postgres" "redis")
 
     for service in "${services[@]}"; do
         if $DOCKER_COMPOSE_CMD ps "$service" | grep -q "Up"; then
@@ -214,6 +220,12 @@ health() {
 shell() {
     echo -e "${BLUE}🐚 Accediendo al shell del backend...${NC}"
     $DOCKER_COMPOSE_CMD exec backend /bin/sh
+}
+
+# Función para shell del frontend
+frontend_shell() {
+    echo -e "${BLUE}🐚 Accediendo al shell del frontend...${NC}"
+    $DOCKER_COMPOSE_CMD exec frontend /bin/sh
 }
 
 # Función para shell de PostgreSQL
@@ -314,6 +326,9 @@ main() {
             ;;
         "shell")
             shell
+            ;;
+        "frontend-shell")
+            frontend_shell
             ;;
         "db-shell")
             db_shell
